@@ -1,0 +1,23 @@
+Big:
+- make database of machines and materials
+- add snap building and foundations
+- add building by size
+- sidebar dropdown with all machines
+- conveyers
+- materials per second totals
+- fix cursor problems
+
+Small:
+- change the event listener for mouse dragging to canvas instead of app
+- when rendering the array of all machines, the key is bad right now
+
+
+Long-term:
+- saving (persistance)
+- overclocking
+- electricity
+- toggle machine names feature
+- "optimize" feature: show where bottlenecks are, where buffers should go. etc
+- zooming in and out
+- view by vertical slice (esp conveyers and pipes)
+- add waste for refineries (things with 2 outputs)

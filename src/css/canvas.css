@@ -1,0 +1,12 @@
+.canvas {
+    height: 100%;
+    width: 100%;
+    background-color: orange;
+}
+
+.canvas-selector {
+    height: 100%;
+    width: 100%;
+    background-color: orange;
+    cursor: pointer;
+}

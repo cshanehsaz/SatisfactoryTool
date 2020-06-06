@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+  background-color: gray;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: [col1-start] 200px [col2-end];
+  grid-template-rows: [row1-start] 10vh [row2-end];
+}
+
+.navbar {
+  grid-column: col1-start / col3-start;
+  grid-row: row1-start;
+}
+
+.sidebar {
+  grid-column: col1-start;
+  grid-row: row2-end;
+  background-color: gainsboro;
+}
+
+.canvas {
+  grid-column: col2-end;
+  grid-row: row2-end;
+}
