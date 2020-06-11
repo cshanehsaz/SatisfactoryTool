@@ -4,6 +4,7 @@ import Conveyer from './conveyer.js'
 import MachineCursor from './machineCursor.js'
 import MachineName from './machineName.js'
 import MachineNode from '../backend/machineNode.js'
+import MachineOutput from './machineOutput.js'
 import '../css/canvas.css'
 
 
@@ -84,7 +85,11 @@ class Canvas extends React.Component {
             <svg width="100%" height="100%" className={this.state.selector ? "canvas-selector" : "canvas"}>
               {/* maps all machines, machine names, and conveyers */}
               {/* need to be able to pass down all data stored in a machine object that we create in this class and store in the array instead of key/val chain */}
-              {this.state.nodes.map(coordinate => <Machine onClick={this.handleMachineClick.bind(this)} x={coordinate.x} y={coordinate.y} data={coordinate.data}/>)}
+              {/* Try to make this so that we only have to map all machine nodes once instead of 3 times or whatever */}
+              {this.state.nodes.map(coordinate => 
+                <Machine onClick={this.handleMachineClick.bind(this)} x={coordinate.x} y={coordinate.y} data={coordinate.data}/>,
+              )}
+              {this.state.nodes.map(node => <MachineOutput x={node.x} y={node.y} data={node.data}/>)}
               {this.state.nodes.map(coordinate => <MachineName name={coordinate.data.name} x={coordinate.x} y={coordinate.y}/>)}
               {this.state.conveyers.map(coors => <Conveyer x1={coors.x1} y1={coors.y1} x2={coors.x2} y2={coors.y2} />)} 
               <MachineCursor x={x} y={y} onMouseMove={this._onMouseMove.bind(this)}/>
