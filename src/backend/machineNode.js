@@ -1,10 +1,13 @@
-class MachineNode {
-    constructor(_name) {
+export default class MachineNode {
+    constructor(_name, _maxInput1, _maxInput2, _maxInput3, _maxInput4, _output) {
         this.name = _name;
         this.children = [];
-        this.maxInput = [];
+        this.maxInput1 = _maxInput1;
+        this.maxInput2 = _maxInput2;
+        this.maxInput3 = _maxInput3;
+        this.maxInput4 = _maxInput4;
         this.input = []; //[{name: a, amount:x}, ...]
-        this.output = {};
+        this.output = _output;
         // this.width;
         // this.height;
         // this.cost = [];

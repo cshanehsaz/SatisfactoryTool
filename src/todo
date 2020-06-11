@@ -6,6 +6,9 @@ Big:
 - conveyers
 - materials per second totals
 - fix cursor problems
+- PRIORITY: setup proxy so that we can fetch from localhost to test machineNode connection to database  
+                ideally, when you click and a new node is made, it should pull all the input and output data
+                and keep it stored in state
 
 Small:
 - change the event listener for mouse dragging to canvas instead of app

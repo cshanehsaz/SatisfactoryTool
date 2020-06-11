@@ -9,8 +9,6 @@ var MySQLStore = require('express-mysql-session')(session)
 const port = 6969;
 
 var connection = mysql.createConnection({
-	//host     : 'localhost',
-	//user     : 'root',
     host     : '157.230.87.48',
     port     : 3306,
     user     : 'cyrus',
@@ -18,20 +16,11 @@ var connection = mysql.createConnection({
 	database : 'satisfactory'
 });
 
-// var sessiontest = {
-//     host     : '157.230.87.48',
-//     port     : 3306,
-//     user     : 'cyrus',
-//     password : 'beerbottle',
-// 	database : 'sessiontest'
-// }
-
-// var sessionStore = new MySQLStore(sessiontest)
-
 var app = express();
 
 // Set up a whitelist and check against it:
-var whitelist = ['http://cshanehsaz.com', 'http://cshanehsaz.com:6969', 'http://localhost:3000']
+var whitelist = ['http://cshanehsaz.com', 'http://cshanehsaz.com:6969', 
+                    'http://localhost:3000', 'http://localhost:6969']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -42,8 +31,8 @@ var corsOptions = {
   }
 }
 
-//app.use(cors(corsOptions));
-//app.use(cors())
+app.use(cors(corsOptions));
+app.use(cors())
 
 app.use(session({
     secret: 'secret',
@@ -61,14 +50,26 @@ app.use(bodyParser.json());
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.get('/logout', function(request, response) {
-    request.session.username = null
-    request.session.loggedin = false
-})
+app.get('/getmachinedata', function(request, response) {
+    let  _name = request.query.name;
+    console.log(request.query)
+    connection.query('SELECT * FROM test WHERE name = ?', [_name], function(error, results, fields) {
+        if (results.length > 0) {
+            console.log('Machine Data Pulled')
+            console.log(results)
+            response.send({data: results})
+        } else {
+            console.log('invalid machine request')
+            response.send('Machine not recognized.');
+        }			
+        response.end();
+    })
+});
 
-app.get('/loggedin', function(request, response) {
-    response.send({session_loggedin: request.session.loggedin})
-})
+
+
+
+
 
 app.post('/auth', function(request, response) {
 	var username = request.body.username;

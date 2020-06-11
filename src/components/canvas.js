@@ -3,6 +3,7 @@ import Machine from './machine.js'
 import Conveyer from './conveyer.js'
 import MachineCursor from './machineCursor.js'
 import MachineName from './machineName.js'
+import MachineNode from '../backend/machineNode.js'
 import '../css/canvas.css'
 
 
@@ -32,6 +33,7 @@ class Canvas extends React.Component {
       }
 
       else {
+        //creates a new conveyer
         let _conveyers = this.state.conveyers;
         _conveyers.push({x1: this.state.currentTarget.x1, y1: this.state.currentTarget.y1, x2: e.target.getAttribute("cx"), y2: e.target.getAttribute("cy")});
         this.setState({
@@ -51,9 +53,28 @@ class Canvas extends React.Component {
 
     _onClick(e) { //at some point make this so that it's not redrawing all of them every frame, just stamps somewhere more permanent instead
       let _nodes = this.state.nodes;
-      _nodes.push({x: this.state.x, y: this.state.y, name: this.props.tool});
-      this.setState({nodes: _nodes});
-      console.log(this.state);
+      this.fetchMachineData(this.props.tool, this.state.nodes)
+    }
+
+    fetchMachineData(name, _nodes) {
+      //fetch request for all of the data so that we ensure it's only done once and stored in state
+        fetch('http://localhost:6969/getmachinedata?name=' + name)
+          .then(res => res.json())
+          .then(res => {
+            console.log('response')
+            console.log(res)
+            let _data = new MachineNode(
+                              res.data[0].name, 
+                              res.data[0].maxInput1,
+                              res.data[0].maxInput2,
+                              res.data[0].maxInput3,
+                              res.data[0].maxInput4,
+                              res.data[0].output
+                            )
+            _nodes.push({x: this.state.x, y: this.state.y, data: _data})
+            console.log(_nodes)
+            this.setState({nodes: _nodes})
+            })
     }
   
     render() {
@@ -62,8 +83,9 @@ class Canvas extends React.Component {
           <div onMouseMove={this._onMouseMove.bind(this)} onClick={this._onClick.bind(this)} className="canvas">
             <svg width="100%" height="100%" className={this.state.selector ? "canvas-selector" : "canvas"}>
               {/* maps all machines, machine names, and conveyers */}
-              {this.state.nodes.map(coordinate => <Machine onClick={this.handleMachineClick.bind(this)} x={coordinate.x} y={coordinate.y}/>)}
-              {this.state.nodes.map(coordinate => <MachineName name={coordinate.name} x={coordinate.x} y={coordinate.y}/>)}
+              {/* need to be able to pass down all data stored in a machine object that we create in this class and store in the array instead of key/val chain */}
+              {this.state.nodes.map(coordinate => <Machine onClick={this.handleMachineClick.bind(this)} x={coordinate.x} y={coordinate.y} data={coordinate.data}/>)}
+              {this.state.nodes.map(coordinate => <MachineName name={coordinate.data.name} x={coordinate.x} y={coordinate.y}/>)}
               {this.state.conveyers.map(coors => <Conveyer x1={coors.x1} y1={coors.y1} x2={coors.x2} y2={coors.y2} />)} 
               <MachineCursor x={x} y={y} onMouseMove={this._onMouseMove.bind(this)}/>
             </svg>

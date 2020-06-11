@@ -9,11 +9,7 @@ class Machine extends React.Component {
 
       //not sure if this should go here or if an object should just be passed around
       this.state = {
-        name: this.props.name,
-        children: this.props.children,
-        maxInput: this.props.maxInput,
-        input: this.props.input,
-        output: this.props.output
+        data: this.props.data,
       }
     }
 
