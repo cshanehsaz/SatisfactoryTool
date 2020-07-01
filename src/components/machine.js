@@ -21,7 +21,7 @@ class Machine extends React.Component {
       const { x, y } = this.props;
       return(
           <circle onClick={this.props.onClick} cx={x} cy={y} 
-          r="40" stroke="black" strokeWidth="3" fill="red" className='machine' />    
+          r="20" stroke="black" strokeWidth="2" fill="red" className='machine' />    
       )
 
     }

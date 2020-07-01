@@ -65,7 +65,26 @@ class Canvas extends React.Component {
 
     _onMouseMove(e) {
       let rect = e.target.getBoundingClientRect()
-      this.setState({ x: e.screenX - rect.x, y: e.screenY - rect.y - rect.top + 50}); //50 to fix the bugs with cursors
+      let _x = e.clientX - rect.x;
+      let _y = e.clientY - rect.y + 75;
+
+      let meter = 50;
+      
+      //snap building in x
+      for(let i=0; i < rect.width; i+=meter) {
+        if(_x >= i && _x < i + meter) {
+          _x = i + (meter / 2)
+        }
+      }
+
+      //snap building in y
+      for(let i=0; i < rect.height; i+=meter) {
+        if(_y >= i && _y < i + meter) {
+          _y = i + (meter / 2)
+        }
+      }
+
+      this.setState({ x: _x, y: _y});
     }
 
     _onClick(e) { //at some point make this so that it's not redrawing all of them every frame, just stamps somewhere more permanent instead
