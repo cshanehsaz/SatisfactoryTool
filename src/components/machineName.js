@@ -15,7 +15,7 @@ class MachineName extends React.Component {
     render() {
       const { x, y } = this.props;
       return(
-          <text onClick={this.props.onClick} x={x} y={y} fill="black">
+          <text onClick={this.props.onClick} x={x-40} y={y+60} fill="black">
               {this.props.name}
           </text>    
       )

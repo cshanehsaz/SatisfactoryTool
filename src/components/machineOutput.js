@@ -12,7 +12,12 @@ class MachineOutput extends React.Component {
     render() {
       const { x, y } = this.props;
       return(
-          <circle cx={x-20} cy={y} r="10" stroke="black" strokeWidth="1" fill="white"/> 
+          <>
+            <circle cx={x+50} cy={y} r="10" stroke="black" strokeWidth="1" fill="white"/> 
+            <text x={x+40} y={y+20} fill="black">
+                {this.props.data.output.name}: {this.props.data.output.amount}                
+            </text>
+          </>
       )
 
     }

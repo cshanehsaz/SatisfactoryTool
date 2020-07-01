@@ -14,8 +14,21 @@ class Conveyer extends React.Component {
   
     render() {
       const { x1, y1, x2, y2 } = this.props;
+      let angle = Math.atan((y2-y1) / (x2-x1))
+      let arrx1 = Number(x2) + (x2>x1 ? -Math.round(Math.cos(angle-Math.PI/4) * 10) : Math.round(Math.cos(angle-Math.PI/4) * 10))
+      let arry1 = Number(y2) + Math.round(Math.sin(angle-Math.PI/4) * 10)
+      let arrx2 = Number(x2) + (x2>x1 ? -Math.round(Math.cos(angle-Math.PI/4) * 10) : Math.round(Math.cos(angle-Math.PI/4) * 10))
+      let arry2 = Number(y2) + Math.round(Math.sin(angle+Math.PI/4) * 10)
       return(
-        <line x1={x1} y1={y1} x2={x2} y2={y2} className="conveyer"/>
+        <>
+          <polygon points={
+                            "" + x2 + "," + y2 + 
+                            " " + arrx1 + "," + arry1 +
+                            " " + arrx2 + "," + arry2
+                          } 
+                   className="conveyer"/>
+          <line x1={x1} y1={y1} x2={x2} y2={y2} className="conveyer"/>
+        </>
       )
 
     }

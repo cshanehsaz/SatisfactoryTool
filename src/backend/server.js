@@ -186,21 +186,3 @@ app.get('/calendartest', function(request, response) {
         }
     )
 })
-
-app.get('/addEventsByDate', function(request, response) {
-    let username = request.session.username
-    let date = String(request.param('date'))
-    console.log('The date you clicked was:' + date)
-    console.log(username)
-
-    connection.query('SELECT * FROM eventstest WHERE username = ? AND time = ?', [username, date], 
-    function(error, results) {
-        if(error) {
-            throw error;
-        } else {
-            response.send({events: results})
-        }
-    }
-)
-
-})
